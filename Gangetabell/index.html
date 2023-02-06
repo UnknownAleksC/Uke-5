@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="content"></div>
+    <script>
+
+        // hjelpevariabler for view og controller
+        let contentDiv = document.getElementById('content');
+
+        // MODEL
+        let columnCount = 5;
+        let multiMatrix = [
+            1, 2, 3, 4, 5,
+            2, 4, 6, 8, 10,
+            3, 6, 9, 12, 15,
+            4, 8, 12, 16, 20,
+            5, 10, 15, 20, 25
+        ];
+
+        // VIEW
+        show();
+        function show() {
+            let html = '';
+            for (let i = 0; i < multiMatrix.length; i++) {
+                let number = multiMatrix[i];
+                html += `<div>${number}</div>`;
+            }
+            contentDiv.innerHTML = /*HTML*/`<input type="range" min="1" max="100" onchange="multiplicationMatrixFunction(this)" value="5">` +
+                /*HTML*/`<div style="display: grid; grid-template-columns: repeat(${columnCount},30px)">${html}</div>`;
+            // multiplicationMatrixDiv.innerHTML = html;
+            // multiplicationMatrixDiv.style.display = 'grid';
+            // multiplicationMatrixDiv.style.gridTemplateColumns = `repeat(${columnCount},30px)`;
+        }
+
+        // CONTROLLER
+        function multiplicationMatrixFunction(checkThis) {
+            columnCount = checkThis.value;
+            multiMatrix = [];
+            // Index og nummer starter på 1 fordi ellers ville 0 * 0 = 1 osv som ikke gir mening
+            for (let i = 1; i <= columnCount; i++) {
+                for (let num = 1; num <= columnCount; num++) {
+                    multiMatrix.push(i * num);
+                }
+            }
+            // console.log(checkThis.value);
+            // console.log(columnCount);
+            show();
+        }
+
+    </script>
+</body>
+
+</html>
