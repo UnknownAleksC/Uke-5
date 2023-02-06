@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Søke Start IT</title>
+    <style>
+        div {
+            color: blue;
+            background-color: azure;
+            padding: 10px;
+            margin: 10px;
+            border: solid cornflowerblue 5px;
+            width: 20px;
+            height: 20px;
+            float: left;
+        }
+
+        div.firstInLine {
+            clear: left;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="app"></p>
+    <script>
+        // MODEL
+        let moveOption = [7, 1, 2, 5, '', 3, 8, 4, 6];
+        let app = document.getElementById('app')
+        const gridSize = 3;
+
+        // VIEW
+        updateView()
+        function updateView() {
+            app.innerHTML = '';
+            for (let i = 0; i < moveOption.length; i++)
+                if (i % 3 === 0) {
+                    app.innerHTML += `<div class="firstInLine" onclick="trykk(${i})">${moveOption[i]}</div>`
+                }
+                else {
+                    app.innerHTML += `<div onclick ="trykk(${i})">${moveOption[i]}</div>`;
+                }
+        }
+
+        // CONTROLLER
+        function trykk(num) {
+            console.log(moveOption);
+            console.log(moveOption[num]);
+            const checkLeft = num % gridSize === 0;
+            const checkRight = (num + 1) % gridSize === 0;
+            const checkUp = Math.floor(num / gridSize) < 1;
+            const checkDown = Math.floor(num / gridSize) >= 2;
+
+            if (!checkLeft && moveOption[num - 1] === '') {
+                moveOption.splice(num - 1, 1, moveOption[num])
+                moveOption[num] = '';
+            }
+            if (!checkRight && moveOption[num + 1] === '') {
+                moveOption.splice(num + 1, 1, moveOption[num])
+                moveOption[num] = '';
+            }
+            if (!checkUp && moveOption[num - 3] === '') {
+                moveOption.splice(num - 3, 1, moveOption[num])
+                moveOption[num] = '';
+            }
+            if (!checkDown && moveOption[num + 3] === '') {
+                moveOption.splice(num + 3, 1, moveOption[num])
+                moveOption[num] = '';
+            }
+
+            // if (moveOption[num] !== '') {
+            //     for (let i = 0; i < moveOption.l; i++) {
+            //         if (moveOption[i] === '') {
+            //             moveOption[i] = moveOption[num]
+            //             moveOption[num] = '';
+            //         }
+            //     }
+            // }
+            updateView();
+        }
+
+    </script>
+</body>
+
+</html>
